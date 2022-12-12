@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "omegle-api": "^1.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.29.0"
+  }
+}
