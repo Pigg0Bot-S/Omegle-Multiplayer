@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "discord.js": "^14.7.1",
+    "http-proxy-agent": "^5.0.0",
+    "https-proxy-agent": "^5.0.1",
     "omegle-api": "^1.0.5"
   },
   "devDependencies": {

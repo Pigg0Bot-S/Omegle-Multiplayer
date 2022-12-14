@@ -1,10 +1,11 @@
 // Require the filesystem and path modules
 const fs = require('node:fs');
 const path = require('node:path');
+const url = require('node:url');
 
 // Require the necessary discord.js classes
 const {Client, Collection, GatewayIntentBits} = require('discord.js');
-const {token} = require('./config.json');
+const {token, proxyString} = require('./config.json');
 
 // Retrieve saved channel permissions
 global.perms = require('./perms.json');
@@ -17,8 +18,13 @@ const client = new Client({
         GatewayIntentBits.MessageContent]
 });
 
-// Require Omegle API
+// Require Omegle API & Proxy Agent
 const Omegle = require('omegle-api');
+const HttpProxyAgent = require('http-proxy-agent');
+
+// Create Proxy Agent
+
+const proxyAgent = new HttpProxyAgent(proxyString);
 
 // Define the Omegle Client Class
 
@@ -35,6 +41,7 @@ for (const file of omegleFiles) {
 global.OmegleClient = class {
     constructor(channel, groupchat) {
         this.client = new Omegle.TextClient();
+        this.client.setAgent(proxyAgent)
         this.channel = channel;
         this.groupchat = groupchat;
 
