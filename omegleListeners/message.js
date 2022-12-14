@@ -1,7 +1,7 @@
 module.exports = {
     name: "message",
-    execute(client, message) {
+    async execute(client, message) {
         console.log("Stranger: " + message);
-        client.channel.send(message);
+        await client.channel.send(message);
     }
 }

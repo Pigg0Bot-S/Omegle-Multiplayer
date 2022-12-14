@@ -20,11 +20,11 @@ const client = new Client({
 
 // Require Omegle API & Proxy Agent
 const Omegle = require('omegle-api');
-const HttpProxyAgent = require('http-proxy-agent');
+const HttpsProxyAgent = require('https-proxy-agent');
 
 // Create Proxy Agent
 
-const proxyAgent = new HttpProxyAgent(proxyString);
+const proxyAgent = new HttpsProxyAgent(proxyString);
 
 // Define the Omegle Client Class
 
@@ -39,11 +39,16 @@ for (const file of omegleFiles) {
     omegleListeners.push(omegleListener);
 }
 global.OmegleClient = class {
-    constructor(channel, groupchat) {
-        this.client = new Omegle.TextClient();
-        this.client.setAgent(proxyAgent)
+    constructor(channel, groupChat, constantGroupChat) {
+        this.constantGroupChat = constantGroupChat;
+        if (this.constantGroupChat) {
+            this.client = [new Omegle.TextClient(), new Omegle.TextClient(), new Omegle.TextClient(), new Omegle.TextClient()];
+        } else {
+            this.client = new Omegle.TextClient();
+        }
+        this.client.setAgent(proxyAgent);
         this.channel = channel;
-        this.groupchat = groupchat;
+        this.groupChat = groupChat;
 
         // Creates listeners for Omegle Events
         omegleListeners.forEach((listener) => {

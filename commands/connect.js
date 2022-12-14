@@ -17,7 +17,7 @@ module.exports = {
         let groupChat = interaction.options.getInteger('groupchat');
         if (groupChat === null) groupChat = 0;
         if (Object.keys(perms).includes(interaction.channelId)) {
-            if (perms[interaction.channel.id] === 0) {
+            if ((perms[interaction.channel.id] === 0) || (perms[interaction.channel.id] === 4)) {
                 interaction.reply("Omegle commands are disabled in this channel.");
                 return;
             } else if (groupChat === 2) {
@@ -47,9 +47,9 @@ module.exports = {
             return;
         }
         console.log(groupChat);
-        activeSessions[interaction.channel.id] = new OmegleClient(interaction.channel, groupChat);
+        activeSessions[interaction.channel.id] = new OmegleClient(interaction.channel, groupChat, false);
         await activeSessions[interaction.channel.id].connect();
-        if (activeSessions[interaction.channel.id].groupchat) {
+        if (activeSessions[interaction.channel.id].groupChat) {
             await interaction.reply("You are connected to an Omegle as a Group Chat!");
         } else {
             await interaction.reply("You are connected to an Omegle as a Stranger!");
